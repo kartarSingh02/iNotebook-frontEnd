@@ -71,9 +71,38 @@ const NoteState = (props) =>{
 
     const [ notes, setNotes] = useState(notesInitial)
 
+
+    // adding note
+    const addNote = (title, description, tag) =>{ 
+        console.log("Adding a note")
+        // Todo Api call
+        const note =  {
+        "_id": "65081878820fc9be3fd5ed5fs3",
+        "user": "65016d4253f27e0007ac5fcc",
+        "title": title,
+        "description": description,
+        "tag": tag,
+        "date": "2023-09-18T09:29:28.871Z",
+        "__v": 0
+    };
+    // concat returns an array, whereas push updates array
+        setNotes(notes.concat(note))
+
+    }
+
+    // deleting note
+    const deleteNote = () =>{
+
+    }
+
+    // editing note
+    const editNote = () =>{
+
+    } 
+
     return(
         // we are wrapping so that any children can access the states without props drilling and using 2 {{}} coz sending mulitple props and value of state is state and udpate is update
-        <NoteContext.Provider value={ {notes, setNotes}}>
+        <NoteContext.Provider value={ {notes, addNote, deleteNote, editNote}}>
         {props.children}
         </NoteContext.Provider> 
     )
