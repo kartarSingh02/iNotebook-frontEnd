@@ -3,79 +3,44 @@ import NoteContext from "./noteContext";
 import { useState } from "react";
 
 const NoteState = (props) =>{
-    const notesInitial = [
-    {
-        "_id": "650416a12fae86ee3b00508ca",
-        "user": "65016d4253f27e0007ac5fcc",
-        "title": "utho",
-        "description": "uth bhai",
-        "tag": "uthjaa",
-        "date": "2023-09-15T08:47:14.675Z",
-        "__v": 0
-    },
-    {
-        "_id": "650818788205fc9befd5ed5f3",
-        "user": "65016d4253f27e0007ac5fcc",
-        "title": "Maarde aa gym dharti khilar de",
-        "description": "gym jao jldi se gym jao",
-        "tag": "personal",
-        "date": "2023-09-18T09:29:28.871Z",
-        "__v": 0
-    },
-    {
-        "_id": "654081878820fc9befd5ed5f3",
-        "user": "65016d4253f27e0007ac5fcc",
-        "title": "Maarde aa gym dharti khilar de",
-        "description": "gym jao jldi se gym jao",
-        "tag": "personal",
-        "date": "2023-09-18T09:29:28.871Z",
-        "__v": 0
-    },
-        {
-        "_id": "65041a122fae86ee3b00508ca",
-        "user": "65016d4253f27e0007ac5fcc",
-        "title": "utho",
-        "description": "uth bhai",
-        "tag": "uthjaa",
-        "date": "2023-09-15T08:47:14.675Z",
-        "__v": 0
-    },
-    {
-        "_id": "650818783820fc9befd5ed5f3",
-        "user": "65016d4253f27e0007ac5fcc",
-        "title": "Maarde aa gym dharti khilar de",
-        "description": "gym jao jldi se gym jao",
-        "tag": "personal",
-        "date": "2023-09-18T09:29:28.871Z",
-        "__v": 0
-    },
-        {
-        "_id": "6504s1a12fae86ee3b00508ca",
-        "user": "65016d4253f27e0007ac5fcc",
-        "title": "utho",
-        "description": "uth bhai",
-        "tag": "uthjaa",
-        "date": "2023-09-15T08:47:14.675Z",
-        "__v": 0
-    },
-    {
-        "_id": "65081878820fc9be3fd5ed5f3",
-        "user": "65016d4253f27e0007ac5fcc",
-        "title": "Maarde aa gym dharti khilar de",
-        "description": "gym jao jldi se gym jao",
-        "tag": "personal",
-        "date": "2023-09-18T09:29:28.871Z",
-        "__v": 0
-    },
-    ]
+    const host = "http://localhost:5000"
+    const notesInitial = []
 
     const [ notes, setNotes] = useState(notesInitial)
 
-
-    // adding note
-    const addNote = (title, description, tag) =>{ 
+    // get all notes
+    const getNotes = async () =>{ 
         console.log("Adding a note")
         // Todo Api call
+        // API Call
+        const response = await fetch(`${host}/api/notes/fetchallnotes`,{
+            method: 'GET',
+            headers:{
+                'Content-Type':'application/json',
+                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUwMTZkNDI1M2YyN2UwMDA3YWM1ZmNjIn0sImlhdCI6MTY5NDYwMjU3N30.z3kz3Hj3t0xXkpVtpVTE__YZULdkhKzBsQd67Z0aXF0'
+            },
+        });
+        const json = await response.json()
+        console.log(json);
+        setNotes(json)
+    }
+
+    // adding note
+    const addNote = async (title, description, tag) =>{ 
+        console.log("Adding a note")
+        // Todo Api call
+        // API Call
+        const response = await fetch(`${host}/api/notes/addnote`,{
+            method: 'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUwMTZkNDI1M2YyN2UwMDA3YWM1ZmNjIn0sImlhdCI6MTY5NDYwMjU3N30.z3kz3Hj3t0xXkpVtpVTE__YZULdkhKzBsQd67Z0aXF0'
+            },
+            body: JSON.stringify({title, description, tag})
+        });
+        const json = response.json();
+
+        // manual data
         const note =  {
         "_id": "65081878820fc9be3fd5ed5fs3",
         "user": "65016d4253f27e0007ac5fcc",
@@ -101,13 +66,32 @@ const NoteState = (props) =>{
     }
 
     // editing note
-    const editNote = (id, title, description, tag) =>{
+    const editNote = async (id, title, description, tag) =>{
+        // API Call
+        const response = await fetch(`${host}/api/notes/updatenote/${id}`,{
+            method: 'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUwMTZkNDI1M2YyN2UwMDA3YWM1ZmNjIn0sImlhdCI6MTY5NDYwMjU3N30.z3kz3Hj3t0xXkpVtpVTE__YZULdkhKzBsQd67Z0aXF0'
+            },
+            body: JSON.stringify({title, description, tag})
+        });
+        // const json = response.json();
 
+        // Logic to edit in client
+        for (let index = 0; index < notes.length; index++) {
+            const element = notes[index];
+            if(element._id===id){
+                element.title =title;
+                element.description =description;
+                element.tag =tag;
+            }     
+        }
     } 
 
     return(
         // we are wrapping so that any children can access the states without props drilling and using 2 {{}} coz sending mulitple props and value of state is state and udpate is update
-        <NoteContext.Provider value={ {notes, addNote, deleteNote, editNote}}>
+        <NoteContext.Provider value={ {notes, addNote, deleteNote, editNote, getNotes}}>
         {props.children}
         </NoteContext.Provider> 
     )
