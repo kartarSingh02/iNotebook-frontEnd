@@ -87,16 +87,21 @@ const NoteState = (props) =>{
     };
     // concat returns an array, whereas push updates array
         setNotes(notes.concat(note))
+        // Reset the form fields to their initial values
+        // setNotes({ title: '', description: '', tag: 'default' });
 
     }
 
     // deleting note
-    const deleteNote = () =>{
-
+    const deleteNote = (id) =>{
+         // Todo Api call
+        console.log("deleting node with id" + id)
+        const newNotes = notes.filter((note)=>{return note._id!==id})
+        setNotes(newNotes)
     }
 
     // editing note
-    const editNote = () =>{
+    const editNote = (id, title, description, tag) =>{
 
     } 
 
