@@ -35,7 +35,7 @@ const Login =() => {
 
 
   return (
-    <div>
+    <div className='container'>
         <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="email" className="form-label">Email address</label>
@@ -46,7 +46,7 @@ const Login =() => {
                 <label htmlFor="password" className="form-label">Password</label>
                 <input type="password" className="form-control" id="password" onChange={onChange} value={credentials.password} name="password"/>
             </div>
-            <button type="submit" className="btn btn-primary" >Submit</button>
+            <button type="submit" className="btn btn-primary" >LogIn</button>
         </form>
     </div>
   )
