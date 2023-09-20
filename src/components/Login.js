@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useNavigate } from 'react-router-dom'
 
-const Login =() => {
+const Login =(props) => {
 
     const [credentials, setCredentials] = useState({email:"", password:""})
     let navigate = useNavigate ();
@@ -22,9 +22,10 @@ const Login =() => {
             localStorage.setItem('token',json.authtoken)
             // before we use useHistory which have been changes in update version to navigate and this will navigate user to homepage
             navigate("/")
+            props.showAlert("Login SuccessFully","success")
         }
         else{
-            alert("Invalid Credentials")
+            props.showAlert("Invalid Credentials","danger")
         }
     }
 

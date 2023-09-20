@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const Signup = (props) => {
     const [credentials, setCredentials] = useState({name:"" ,email:"", password:"", cpassword:""})
     let navigate = useNavigate ();
 
@@ -25,9 +25,10 @@ const Signup = () => {
             localStorage.setItem('token',json.authtoken)
             // before we use useHistory which have been changes in update version to navigate and this will navigate user to homepage
             navigate("/")
+            props.showAlert("SuccessFully Registered","success")
         }
         else{
-            alert("Password Did'nt matched")
+            props.showAlert("Invalid Credentials","danger")
         }
     }
 
