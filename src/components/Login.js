@@ -17,12 +17,17 @@ const Login =(props) => {
         });
         const json = await response.json();
         console.log(json)
+
         if(json.success){
-            // save the auth and redirect
-            localStorage.setItem('token',json.authtoken)
+            // save the auth and redirect 
+            // debugger;
+            localStorage.setItem('token',json.authToken)
+
+            props.showAlert("Login SuccessFully","success")
+
             // before we use useHistory which have been changes in update version to navigate and this will navigate user to homepage
             navigate("/")
-            props.showAlert("Login SuccessFully","success")
+            
         }
         else{
             props.showAlert("Invalid Credentials","danger")
@@ -36,7 +41,8 @@ const Login =(props) => {
 
 
   return (
-    <div className='container'>
+    <div className='container mt-2'>
+    <h2>Login to Continue</h2>
         <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="email" className="form-label">Email address</label>

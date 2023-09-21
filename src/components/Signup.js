@@ -22,13 +22,13 @@ const Signup = (props) => {
         console.log(json)
         if(json.success){
             // save the auth and redirect
-            localStorage.setItem('token',json.authtoken)
+            localStorage.setItem('token',json.authToken)
             // before we use useHistory which have been changes in update version to navigate and this will navigate user to homepage
             navigate("/")
             props.showAlert("SuccessFully Registered","success")
         }
         else{
-            props.showAlert("Invalid Credentials","danger")
+            props.showAlert("Invalid Credentials or User already exists","danger")
         }
     }
 
@@ -39,7 +39,8 @@ const Signup = (props) => {
 
 
   return (
-    <div className='container'>
+    <div className='container mt-2'>
+    <h2>Create an account to use your cloud notebook</h2>
         <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">Name</label>
